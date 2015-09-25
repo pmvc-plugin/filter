@@ -1,0 +1,17 @@
+{
+    "name": "pmvc-plugin/filter",
+    "description": "PMVC Input Filter Lib",
+    "type": "library",
+    "keywords": ["filter", "pmvc", "plug-in"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hill",
+            "email": "hill@kimo.com"
+        }
+    ],
+    "require": {
+        "pmvc/pmvc": "*"
+    },
+    "minimum-stability": "dev"
+}
