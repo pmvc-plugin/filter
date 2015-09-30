@@ -49,7 +49,7 @@ class String extends BaseFilter
     function getDefaults()
     {
         return array(
-            'trim'=>false,
+            'trim'=>true,
             'min'=>1,
             'max'=>null,
             'reg'=>null,
