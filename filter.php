@@ -37,7 +37,7 @@ class filter extends \PMVC\PlugIn
         $this->filter[$type] = new $class();
     }
 
-    public function one($type, &$value, $params=array())
+    public function one($type, $value, $params=array())
     {
         if (empty($this->filter[$type])) {
             $this->initFilter($type);
