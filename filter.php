@@ -54,7 +54,8 @@ class filter extends \PMVC\PlugIn
         foreach($values as $key=>$value) {
             $results[$key] = $this->one(
                 $params[$key]['type'],
-                $params['type']
+                $value,
+                $params[$key]['params']
             );
         }
         return $results;
