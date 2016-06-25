@@ -1,8 +1,9 @@
 <?php
 namespace PMVC\PlugIn\filter;
 
-
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\filter';
+
+\PMVC\l(__DIR__.'/src/BaseFilter.php');
 
 class filter extends \PMVC\PlugIn
 {
@@ -31,7 +32,6 @@ class filter extends \PMVC\PlugIn
 
     public function initFilter($type)
     {
-        \PMVC\l(__DIR__.'/src/BaseFilter.php');
         \PMVC\l(__DIR__.'/src/filters/'.$type.'.php');
         $class = __NAMESPACE__.'\\'.$type;
         $this->filter[$type] = new $class();

@@ -19,7 +19,7 @@ abstract class BaseFilter {
 
     public function mergeDefault($params)
     {
-        return \PMVC\mergeDefault(
+        return array_replace(
             $this->getDefaults(),
             $params
         );

@@ -1,6 +1,6 @@
 <?php
-PMVC\Load::plug();
-PMVC\addPlugInFolder('../');
+PMVC\Load::plug(['controller'=>'']);
+PMVC\addPlugInFolders(['../']);
 class FilterTest extends PHPUnit_Framework_TestCase
 {
     private $_plug = 'filter';
