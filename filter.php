@@ -1,61 +1,42 @@
 <?php
 namespace PMVC\PlugIn\filter;
 
+use PMVC\Object;
+
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\filter';
 
 \PMVC\l(__DIR__.'/src/BaseFilter.php');
 
+/**
+ * @parameters string lastError debug message 
+ */
 class filter extends \PMVC\PlugIn
 {
-
-    private $filter;
-
-    public function __call($method, $args)
+    public function one($type, array $params=[])
     {
-        if ('to' !== substr($method,0,2)) {
-            return parent::__call($method, $args);
-        } else {
-            $method = substr($method, 2);
-        }
-        $value =& $args[0];
-        $params = array();
-        if (!empty($args[1])) {
-            $params = $args[1];
+        $value = ($params[0] instanceof Object) ? 
+            $params[0] :
+            new Object($params[0]);
+        if (empty($params[1])) {
+            $params[1] = [];
         }
         return call_user_func(
-            array($this,'one'),
-            $method,
+            [$this,'to'.$type],
             $value,
-            $params
+            $params[1]
         );
     }
 
-    public function initFilter($type)
-    {
-        \PMVC\l(__DIR__.'/src/filters/'.$type.'.php');
-        $class = __NAMESPACE__.'\\'.$type;
-        $this->filter[$type] = new $class();
-    }
-
-    public function one($type, $value, $params=array())
-    {
-        if (empty($this->filter[$type])) {
-            $this->initFilter($type);
-        }
-        return $this->filter[$type]->validate(
-            $value,
-            $params
-        );
-    }
-
-    public function all($values, $params)
+    public function all(array $values, array $params)
     {
         $results = array();
         foreach($values as $key=>$value) {
             $results[$key] = $this->one(
                 $params[$key]['type'],
-                $value,
-                $params[$key]['params']
+                [
+                    $value,
+                    $params[$key]['params']
+                ]
             );
         }
         return $results;

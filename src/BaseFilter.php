@@ -2,7 +2,7 @@
 namespace PMVC\PlugIn\filter;
 
 abstract class BaseFilter {
-    abstract function validate(&$value, $params=array());
+    abstract function __invoke($value, array $params=[]);
 
     public function &getValue(&$value)
     {

@@ -1,9 +1,11 @@
 <?php
 namespace PMVC\PlugIn\filter;
 
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\Email';
+
 class Email extends BaseFilter
 {
-    function validate(&$val, $params = array())
+    function __invoke($val, array $params = [])
     {
         $v =& $this->getValue($val);
         $v = trim($v);
