@@ -34,28 +34,28 @@ class FilterTest extends PHPUnit_Framework_TestCase
     {
         $plug = PMVC\plug($this->_plug);
         $username = 'aaa.bbb';
-        $this->assertTrue($plug->toUsername($username));
+        $this->assertTrue($plug->one('username',[$username]));
     }
 
     function testInvalidUsername()
     {
         $plug = PMVC\plug($this->_plug);
         $username = 'aaabbb_';
-        $this->assertFalse($plug->toUsername($username));
+        $this->assertFalse($plug->one('username',[$username]));
     }
 
     function testRegularExpression()
     {
         $plug = PMVC\plug($this->_plug);
         $reg = '/()/';
-        $this->assertTrue($plug->toRegexp($reg));
+        $this->assertTrue($plug->one('regexp',[$reg]));
     }
 
     function testInvalidRegularExpression()
     {
         $plug = PMVC\plug($this->_plug);
         $reg = '/~InvalidRegular)Expression~/';
-        $this->assertFalse($plug->toRegexp($reg));
+        $this->assertFalse($plug->one('regexp',[$reg]));
         $lastError = 'Compilation failed: unmatched parentheses at offset 15. PREG Fail: [NO_ERROR]';
         $this->assertContains($lastError, $plug['lastError']);
     }
@@ -68,16 +68,12 @@ class FilterTest extends PHPUnit_Framework_TestCase
         ];
         $params = [
             'max1'=>[
-                'type'=>'String',
-                'params'=>[
-                    'max'=>1
-                ]
+                'String',
+                'max'=>1
             ],
             'max3'=>[
-                'type'=>'String',
-                'params'=>[
-                    'max'=>3
-                ]
+                'String',
+                'max'=>3
             ]
         ];
         $plug = PMVC\plug($this->_plug);

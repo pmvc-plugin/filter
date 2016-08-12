@@ -17,13 +17,12 @@ class filter extends \PMVC\PlugIn
         $value = ($params[0] instanceof Object) ? 
             $params[0] :
             new Object($params[0]);
-        if (empty($params[1])) {
-            $params[1] = [];
-        }
+        array_shift($params);
+        
         return call_user_func(
-            [$this,'to'.$type],
+            [$this,'to_'.$type],
             $value,
-            $params[1]
+            $params
         );
     }
 
@@ -31,12 +30,11 @@ class filter extends \PMVC\PlugIn
     {
         $results = array();
         foreach($values as $key=>$value) {
+            $type = array_shift($params[$key]);
+            array_unshift($params[$key],$value);
             $results[$key] = $this->one(
-                $params[$key]['type'],
-                [
-                    $value,
-                    $params[$key]['params']
-                ]
+                $type,
+                $params[$key]
             );
         }
         return $results;

@@ -50,14 +50,14 @@ class String extends BaseFilter
 
     function getDefaults()
     {
-        return array(
+        return [ 
             'trim'=>true,
             'min'=>1,
             'max'=>null,
             'reg'=>null,
             'regBool'=>null,
             'regReplace'=>null
-        );
+        ];
     }
 }
 

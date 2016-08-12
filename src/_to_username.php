@@ -7,12 +7,13 @@ class Username extends BaseFilter
 {
     function __invoke($val, array $params = [])
     {
-        return \PMVC\plug('filter')->toString(
-            $val, 
-            array(
+        return \PMVC\plug('filter')->one(
+            'string',
+            [
+               $val, 
                'reg'=>'/[^a-z0-9\.]/',
                'regBool'=>false
-            )
+            ]
         );
     }
 }
