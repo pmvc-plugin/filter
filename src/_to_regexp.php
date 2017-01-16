@@ -7,7 +7,7 @@ class Regexp extends BaseFilter
 {
     function __invoke($val, array $params = [])
     {
-        $v =& $this->getValue($val);
+        $v =& \PMVC\ref($val);
         set_error_handler([$this, 'fail']);
         $bool = preg_match($v,null,$match);
         restore_error_handler();

@@ -7,7 +7,7 @@ class String extends BaseFilter
 {
     function __invoke($val, array $params = [])
     {
-        $v =& $this->getValue($val);
+        $v =& \PMVC\ref($val);
         extract(
             $this->mergeDefault($params),
             EXTR_PREFIX_ALL,

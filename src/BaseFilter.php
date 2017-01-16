@@ -2,16 +2,8 @@
 namespace PMVC\PlugIn\filter;
 
 abstract class BaseFilter {
-    abstract function __invoke($value, array $params=[]);
 
-    public function &getValue(&$value)
-    {
-        if (is_a($value, '\PMVC\Object')) {
-            return $value();
-        } else {
-            return $value;
-        }
-    }
+    abstract function __invoke($value, array $params=[]);
 
     public function getDefaults()
     {
