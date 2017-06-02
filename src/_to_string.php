@@ -1,9 +1,9 @@
 <?php
 namespace PMVC\PlugIn\filter;
 
-${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\String';
+${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\FilterString';
 
-class String extends BaseFilter
+class FilterString extends BaseFilter
 {
     function __invoke($val, array $params = [])
     {
