@@ -12,18 +12,31 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\filter';
  */
 class filter extends \PMVC\PlugIn
 {
+
+    private $_phpFilters;
+
     public function one($type, array $params=[])
     {
         $value = ($params[0] instanceof Object) ? 
             $params[0] :
             new Object($params[0]);
         array_shift($params);
-        
-        return call_user_func(
-            [$this,'to_'.$type],
-            $value,
-            $params
-        );
+        $func = 'to_'.$type;
+        if ($this->isCallable($func)) { 
+            return call_user_func(
+                [$this,$func],
+                $value,
+                $params
+            );
+        }
+        if (in_array(strtolower($type), $this->_getPhpFilters())) {
+            return call_user_func(
+                [$this, 'to_validate'],
+                $value,
+                array_merge( $params, ['type'=>$type] )
+            );
+        }
+        return !trigger_error('Type is not support. ['.$type.']');
     }
 
     public function all(array $values, array $params)
@@ -38,5 +51,13 @@ class filter extends \PMVC\PlugIn
             );
         }
         return $results;
+    }
+
+    private function _getPhpFilters()
+    {
+        if (empty($this->_phpFilters)) {
+            $this->_phpFilters = filter_list();
+        }
+        return $this->_phpFilters;
     }
 }

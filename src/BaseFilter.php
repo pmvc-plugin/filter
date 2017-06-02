@@ -7,6 +7,7 @@ abstract class BaseFilter {
 
     public function getDefaults()
     {
+        return !trigger_error('Filter not Implement getDefaults.');
     }
 
     public function mergeDefault($params)
