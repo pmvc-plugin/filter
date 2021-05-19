@@ -1,8 +1,11 @@
 <?php
-PMVC\Load::plug();
-PMVC\addPlugInFolders(['../']);
 
-class FilterTest extends PHPUnit_Framework_TestCase
+namespace PMVC\PlugIn\filter;
+
+use PMVC;
+use PMVC\TestCase; 
+
+class FilterTest extends TestCase
 {
     private $_plug = 'filter';
     function testPlugin()
@@ -11,7 +14,7 @@ class FilterTest extends PHPUnit_Framework_TestCase
         print_r(PMVC\plug($this->_plug));
         $output = ob_get_contents();
         ob_end_clean();
-        $this->assertContains($this->_plug,$output);
+        $this->haveString($this->_plug,$output);
     }
 
     function testToEmail()
@@ -26,7 +29,7 @@ class FilterTest extends PHPUnit_Framework_TestCase
     {
         $plug = PMVC\plug($this->_plug);
         $email = 'ddaaa@gmail.com ';
-        $this->assertTrue($plug->one('Email',[new \PMVC\Object($email)]));
+        $this->assertTrue($plug->one('Email',[new \PMVC\BaseObject($email)]));
         $this->assertEquals(trim($email), $email);
     }
 
@@ -56,8 +59,10 @@ class FilterTest extends PHPUnit_Framework_TestCase
         $plug = PMVC\plug($this->_plug);
         $reg = '/~InvalidRegular)Expression~/';
         $this->assertFalse($plug->one('regexp',[$reg]));
-        $lastError = 'Compilation failed: unmatched parentheses at offset 15. PREG Fail: [NO_ERROR]';
-        $this->assertContains($lastError, $plug['lastError']);
+        $lastError1 = 'Compilation failed: unmatched';
+        $lastError2 = 'at offset 15. PREG Fail: [NO_ERROR]';
+        $this->haveString($lastError1, $plug['lastError']);
+        $this->haveString($lastError2, $plug['lastError']);
     }
 
     function testVerifyAll()

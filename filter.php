@@ -1,7 +1,8 @@
 <?php
 namespace PMVC\PlugIn\filter;
 
-use PMVC\Object;
+use PMVC\BaseObject;
+use PMVC\PlugIn;
 
 ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\filter';
 
@@ -10,16 +11,16 @@ ${_INIT_CONFIG}[_CLASS] = __NAMESPACE__.'\filter';
 /**
  * @parameters string lastError debug message 
  */
-class filter extends \PMVC\PlugIn
+class filter extends PlugIn
 {
 
     private $_phpFilters;
 
     public function one($type, array $params=[])
     {
-        $value = ($params[0] instanceof Object) ? 
+        $value = ($params[0] instanceof BaseObject) ? 
             $params[0] :
-            new Object($params[0]);
+            new BaseObject($params[0]);
         array_shift($params);
         $func = 'to_'.$type;
         if ($this->isCallable($func)) { 
